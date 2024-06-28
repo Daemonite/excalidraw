@@ -43,7 +43,7 @@ import { InlineIcon } from "../InlineIcon";
 import { SHAPES } from "../../shapes";
 import { canChangeBackgroundColor, canChangeStrokeColor } from "../Actions";
 import { useStableCallback } from "../../hooks/useStableCallback";
-import { actionClearCanvas, actionLink } from "../../actions";
+import { actionClearCanvas } from "../../actions";
 import { jotaiStore } from "../../jotai";
 import { activeConfirmDialogAtom } from "../ActiveConfirmDialog";
 import type { CommandPaletteItem } from "./types";
@@ -275,7 +275,6 @@ function CommandPaletteInner({
         actionManager.actions.increaseFontSize,
         actionManager.actions.decreaseFontSize,
         actionManager.actions.toggleLinearEditor,
-        actionLink,
       ].map((action: Action) =>
         actionToCommand(
           action,
