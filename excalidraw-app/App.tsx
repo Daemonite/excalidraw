@@ -23,7 +23,6 @@ import { t } from "../packages/excalidraw/i18n";
 import {
   Excalidraw,
   defaultLang,
-  LiveCollaborationTrigger,
   TTDDialog,
   TTDDialogTrigger,
   StoreAction,
@@ -821,12 +820,6 @@ const ExcalidrawWrapper = () => {
           return (
             <div className="top-right-ui">
               {collabError.message && <CollabError collabError={collabError} />}
-              <LiveCollaborationTrigger
-                isCollaborating={isCollaborating}
-                onSelect={() =>
-                  setShareDialogState({ isOpen: true, type: "share" })
-                }
-              />
             </div>
           );
         }}
