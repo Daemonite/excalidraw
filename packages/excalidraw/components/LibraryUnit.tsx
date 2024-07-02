@@ -3,7 +3,6 @@ import { memo, useEffect, useRef, useState } from "react";
 import { useDevice } from "./App";
 import type { LibraryItem } from "../types";
 import "./LibraryUnit.scss";
-import { CheckboxItem } from "./CheckboxItem";
 import { PlusIcon } from "./icons";
 import type { SvgCache } from "../hooks/useLibraryItemSvg";
 import { useLibraryItemSvg } from "../hooks/useLibraryItemSvg";
@@ -48,7 +47,6 @@ export const LibraryUnit = memo(
     }, [svg]);
 
     const [isHovered, setIsHovered] = useState(false);
-    const isMobile = useDevice().editor.isMobile;
     const adder = isPending && (
       <div className="library-unit__adder">{PlusIcon}</div>
     );
@@ -91,13 +89,6 @@ export const LibraryUnit = memo(
           }}
         />
         {adder}
-        {id && elements && (isHovered || isMobile || selected) && (
-          <CheckboxItem
-            checked={selected}
-            onChange={(checked, event) => onToggle(id, event)}
-            className="library-unit__checkbox"
-          />
-        )}
       </div>
     );
   },

@@ -18,8 +18,6 @@ import Stack from "./Stack";
 import { MIME_TYPES } from "../constants";
 import Spinner from "./Spinner";
 import { duplicateElements } from "../element/newElement";
-import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
-import { LibraryDropdownMenu } from "./LibraryMenuHeaderContent";
 import {
   LibraryMenuSection,
   LibraryMenuSectionGrid,
@@ -75,18 +73,6 @@ export default function LibraryMenuItems({
     [libraryItems],
   );
 
-  const publishedItems = useMemo(
-    () => libraryItems.filter((item) => item.status === "published"),
-    [libraryItems],
-  );
-
-  const showBtn = !libraryItems.length && !pendingElements.length;
-
-  const isLibraryEmpty =
-    !pendingElements.length &&
-    !unpublishedItems.length &&
-    !publishedItems.length;
-
   const [lastSelectedItem, setLastSelectedItem] = useState<
     LibraryItem["id"] | null
   >(null);
@@ -95,14 +81,12 @@ export default function LibraryMenuItems({
     (id: LibraryItem["id"], event: React.MouseEvent) => {
       const shouldSelect = !selectedItems.includes(id);
 
-      const orderedItems = [...unpublishedItems, ...publishedItems];
-
       if (shouldSelect) {
         if (event.shiftKey && lastSelectedItem) {
-          const rangeStart = orderedItems.findIndex(
+          const rangeStart = unpublishedItems.findIndex(
             (item) => item.id === lastSelectedItem,
           );
-          const rangeEnd = orderedItems.findIndex((item) => item.id === id);
+          const rangeEnd = unpublishedItems.findIndex((item) => item.id === id);
 
           if (rangeStart === -1 || rangeEnd === -1) {
             onSelectItems([...selectedItems, id]);
@@ -110,7 +94,7 @@ export default function LibraryMenuItems({
           }
 
           const selectedItemsMap = arrayToMap(selectedItems);
-          const nextSelectedIds = orderedItems.reduce(
+          const nextSelectedIds = unpublishedItems.reduce(
             (acc: LibraryItem["id"][], item, idx) => {
               if (
                 (idx >= rangeStart && idx <= rangeEnd) ||
@@ -133,13 +117,7 @@ export default function LibraryMenuItems({
         onSelectItems(selectedItems.filter((_id) => _id !== id));
       }
     },
-    [
-      lastSelectedItem,
-      onSelectItems,
-      publishedItems,
-      selectedItems,
-      unpublishedItems,
-    ],
+    [lastSelectedItem, onSelectItems, selectedItems, unpublishedItems],
   );
 
   const getInsertedElements = useCallback(
@@ -206,37 +184,21 @@ export default function LibraryMenuItems({
   return (
     <div
       className="library-menu-items-container"
-      style={
-        pendingElements.length ||
-        unpublishedItems.length ||
-        publishedItems.length
-          ? { justifyContent: "flex-start" }
-          : { borderBottom: 0 }
-      }
+      style={{
+        justifyContent: "flex-start",
+      }}
     >
-      {!isLibraryEmpty && (
-        <LibraryDropdownMenu
-          selectedItems={selectedItems}
-          onSelectItems={onSelectItems}
-          className="library-menu-dropdown-container--in-heading"
-        />
-      )}
       <Stack.Col
-        className="library-menu-items-container__items"
         align="start"
+        className="library-menu-items-container__items"
         gap={1}
+        ref={libraryContainerRef}
         style={{
-          flex: publishedItems.length > 0 ? 1 : "0 1 auto",
+          flex: "0 1 auto",
           marginBottom: 0,
         }}
-        ref={libraryContainerRef}
       >
         <>
-          {!isLibraryEmpty && (
-            <div className="library-menu-items-container__header">
-              {t("labels.personalLib")}
-            </div>
-          )}
           {isLoading && (
             <div
               style={{
@@ -253,11 +215,6 @@ export default function LibraryMenuItems({
             <div className="library-menu-items__no-items">
               <div className="library-menu-items__no-items__label">
                 {t("library.noItems")}
-              </div>
-              <div className="library-menu-items__no-items__hint">
-                {publishedItems.length > 0
-                  ? t("library.hint_emptyPrivateLibrary")
-                  : t("library.hint_emptyLibrary")}
               </div>
             </div>
           ) : (
@@ -285,57 +242,6 @@ export default function LibraryMenuItems({
             </LibraryMenuSectionGrid>
           )}
         </>
-
-        <>
-          {(publishedItems.length > 0 ||
-            pendingElements.length > 0 ||
-            unpublishedItems.length > 0) && (
-            <div className="library-menu-items-container__header library-menu-items-container__header--excal">
-              {t("labels.excalidrawLib")}
-            </div>
-          )}
-          {publishedItems.length > 0 ? (
-            <LibraryMenuSectionGrid>
-              <LibraryMenuSection
-                itemsRenderedPerBatch={itemsRenderedPerBatch}
-                items={publishedItems}
-                onItemSelectToggle={onItemSelectToggle}
-                onItemDrag={onItemDrag}
-                onClick={onItemClick}
-                isItemSelected={isItemSelected}
-                svgCache={svgCache}
-              />
-            </LibraryMenuSectionGrid>
-          ) : unpublishedItems.length > 0 ? (
-            <div
-              style={{
-                margin: "1rem 0",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                fontSize: ".9rem",
-              }}
-            >
-              {t("library.noItems")}
-            </div>
-          ) : null}
-        </>
-
-        {showBtn && (
-          <LibraryMenuControlButtons
-            style={{ padding: "16px 0", width: "100%" }}
-            id={id}
-            libraryReturnUrl={libraryReturnUrl}
-            theme={theme}
-          >
-            <LibraryDropdownMenu
-              selectedItems={selectedItems}
-              onSelectItems={onSelectItems}
-            />
-          </LibraryMenuControlButtons>
-        )}
       </Stack.Col>
     </div>
   );
