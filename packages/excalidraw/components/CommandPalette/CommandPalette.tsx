@@ -23,7 +23,6 @@ import {
   searchIcon,
   boltIcon,
   bucketFillIcon,
-  ExportImageIcon,
   mermaidLogoIcon,
   brainIconThin,
   LibraryIcon,
@@ -317,8 +316,6 @@ function CommandPaletteInner({
       ].map((action) => actionToCommand(action, DEFAULT_CATEGORIES.editor));
 
       const exportCommands: CommandPaletteItem[] = [
-        actionManager.actions.saveToActiveFile,
-        actionManager.actions.saveFileToDisk,
         actionManager.actions.copyAsPng,
         actionManager.actions.copyAsSvg,
       ].map((action) => actionToCommand(action, DEFAULT_CATEGORIES.export));
@@ -337,24 +334,6 @@ function CommandPaletteInner({
           viewMode: false,
           perform: () => {
             jotaiStore.set(activeConfirmDialogAtom, "clearCanvas");
-          },
-        },
-        {
-          label: t("buttons.exportImage"),
-          category: DEFAULT_CATEGORIES.export,
-          icon: ExportImageIcon,
-          shortcut: getShortcutFromShortcutName("imageExport"),
-          keywords: [
-            "export",
-            "image",
-            "png",
-            "jpeg",
-            "svg",
-            "clipboard",
-            "picture",
-          ],
-          perform: () => {
-            setAppState({ openDialog: { name: "imageExport" } });
           },
         },
         ...exportCommands,

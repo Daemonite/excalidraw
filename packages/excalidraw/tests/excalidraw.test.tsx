@@ -242,7 +242,6 @@ describe("<Excalidraw/>", () => {
                   custom item
                 </button>
               </MainMenu.ItemCustom>
-              <MainMenu.DefaultItems.LoadScene />
             </MainMenu>
           </Excalidraw>,
         );

@@ -8,7 +8,6 @@ export type ShortcutName =
   | SubtypeOf<
       ActionName,
       | "toggleTheme"
-      | "loadScene"
       | "clearCanvas"
       | "cut"
       | "copy"
@@ -34,7 +33,6 @@ export type ShortcutName =
       | "viewMode"
       | "flipHorizontal"
       | "flipVertical"
-      | "hyperlink"
       | "toggleElementLock"
       | "resetZoom"
       | "zoomOut"
@@ -45,20 +43,13 @@ export type ShortcutName =
       | "toggleEraserTool"
       | "toggleHandTool"
       | "setFrameAsActiveTool"
-      | "saveFileToDisk"
-      | "saveToActiveFile"
       | "toggleShortcuts"
     >
-  | "saveScene"
-  | "imageExport"
   | "commandPalette";
 
 const shortcutMap: Record<ShortcutName, string[]> = {
   toggleTheme: [getShortcutKey("Shift+Alt+D")],
-  saveScene: [getShortcutKey("CtrlOrCmd+S")],
-  loadScene: [getShortcutKey("CtrlOrCmd+O")],
   clearCanvas: [getShortcutKey("CtrlOrCmd+Delete")],
-  imageExport: [getShortcutKey("CtrlOrCmd+Shift+E")],
   commandPalette: [
     getShortcutKey("CtrlOrCmd+/"),
     getShortcutKey("CtrlOrCmd+Shift+P"),
@@ -98,7 +89,6 @@ const shortcutMap: Record<ShortcutName, string[]> = {
   flipHorizontal: [getShortcutKey("Shift+H")],
   flipVertical: [getShortcutKey("Shift+V")],
   viewMode: [getShortcutKey("Alt+R")],
-  hyperlink: [getShortcutKey("CtrlOrCmd+K")],
   toggleElementLock: [getShortcutKey("CtrlOrCmd+Shift+L")],
   resetZoom: [getShortcutKey("CtrlOrCmd+0")],
   zoomOut: [getShortcutKey("CtrlOrCmd+-")],
@@ -109,8 +99,6 @@ const shortcutMap: Record<ShortcutName, string[]> = {
   toggleEraserTool: [getShortcutKey("E")],
   toggleHandTool: [getShortcutKey("H")],
   setFrameAsActiveTool: [getShortcutKey("F")],
-  saveFileToDisk: [getShortcutKey("CtrlOrCmd+S")],
-  saveToActiveFile: [getShortcutKey("CtrlOrCmd+S")],
   toggleShortcuts: [getShortcutKey("?")],
 };
 

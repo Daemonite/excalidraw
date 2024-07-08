@@ -129,7 +129,6 @@ describe("contextMenu element", () => {
       "sendToBack",
       "bringToFront",
       "duplicateSelection",
-      "hyperlink",
       "toggleElementLock",
     ];
 
