@@ -324,6 +324,7 @@ body.excalidraw-cursor-resize * {
       var(--bar-padding) + var(--default-button-size) + var(--space-factor)
     );
     left: 0;
+    z-index: 1;
   }
 
   .App-menu {
