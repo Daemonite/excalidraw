@@ -275,6 +275,12 @@ body.excalidraw-cursor-resize * {
         padding: 8px 8px 0 8px;
       }
     }
+
+    .zoom-actions {
+      position: absolute;
+      bottom: calc(100% + 2 * var(--space-factor));
+      left: 0;
+    }
   }
 
   .App-toolbar {
@@ -304,11 +310,20 @@ body.excalidraw-cursor-resize * {
   }
 
   .App-mobile-menu {
+    background-color: var(--island-bg-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-island);
     width: 100%;
     overflow-x: visible;
     overflow-y: auto;
     box-sizing: border-box;
-    margin-bottom: var(--bar-padding);
+    max-height: 75vh;
+    max-width: 202px;
+    position: absolute;
+    bottom: calc(
+      var(--bar-padding) + var(--default-button-size) + var(--space-factor)
+    );
+    left: 0;
   }
 
   .App-menu {
@@ -335,11 +350,6 @@ body.excalidraw-cursor-resize * {
 
     & > * {
       pointer-events: var(--ui-pointerEvents);
-    }
-
-    @media (min-width: 1536px) {
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 3rem;
     }
   }
 
@@ -397,6 +407,10 @@ body.excalidraw-cursor-resize * {
     width: 202px;
     box-sizing: border-box;
     position: absolute;
+    top: calc(
+      var(--lg-button-size) + var(--padding) * var(--space-factor) +
+        var(--space-factor)
+    );
   }
 
   .dropdown-select {
@@ -618,14 +632,19 @@ body.excalidraw-cursor-resize * {
 
     background-color: var(--island-bg-color);
 
+    .ToolIcon:last-child .ToolIcon__icon {
+      border-bottom-left-radius: var(--border-radius-lg);
+    }
+
     .ToolIcon__icon {
-      width: 2rem;
-      height: 2rem;
+      width: 2.25rem;
+      height: 2.25rem;
       border-radius: 0;
     }
 
     .default-sidebar-trigger {
       border: 0;
+      border-radius: var(--border-radius-lg) 0 0 0;
     }
   }
 

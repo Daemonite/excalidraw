@@ -16,7 +16,7 @@ import { FixedSideContainer } from "./FixedSideContainer";
 import { Island } from "./Island";
 import { HintViewer } from "./HintViewer";
 import { calculateScrollCenter } from "../scene";
-import { SelectedShapeActions, ShapesSwitcher } from "./Actions";
+import { SelectedShapeActions, ShapesSwitcher, ZoomActions } from "./Actions";
 import { Section } from "./Section";
 import { SCROLLBAR_WIDTH, SCROLLBAR_MARGIN } from "../scene/scrollbars";
 import { LockButton } from "./LockButton";
@@ -65,11 +65,8 @@ export const MobileMenu = ({
   UIOptions,
   app,
 }: MobileMenuProps) => {
-  const {
-    WelcomeScreenCenterTunnel,
-    MainMenuTunnel,
-    DefaultSidebarTriggerTunnel,
-  } = useTunnels();
+  const { WelcomeScreenCenterTunnel, DefaultSidebarTriggerTunnel } =
+    useTunnels();
   const renderToolbar = () => {
     return (
       <FixedSideContainer side="top" className="App-top-bar">
@@ -89,7 +86,6 @@ export const MobileMenu = ({
                     />
                   </Stack.Row>
                 </Island>
-                {renderTopRightUI && renderTopRightUI(true, appState)}
                 <div className="mobile-misc-tools-container">
                   {!appState.viewModeEnabled && (
                     <DefaultSidebarTriggerTunnel.Out />
@@ -130,9 +126,7 @@ export const MobileMenu = ({
 
   const renderAppToolbar = () => {
     if (appState.viewModeEnabled) {
-      return (
-        <div className="App-toolbar-content"></div>
-      );
+      return <div className="App-toolbar-content"></div>;
     }
 
     return (
@@ -173,6 +167,10 @@ export const MobileMenu = ({
             </Section>
           ) : null}
           <footer className="App-toolbar">
+            <ZoomActions
+              renderAction={actionManager.renderAction}
+              zoom={appState.zoom}
+            />
             {renderAppToolbar()}
             {appState.scrolledOutside &&
               !appState.openMenu &&

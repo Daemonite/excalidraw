@@ -201,15 +201,6 @@ const LayerUI = ({
     );
   };
 
-  const renderCanvasActions = () => (
-    <div style={{ position: "relative" }}>
-      {/* wrapping to Fragment stops React from occasionally complaining
-                about identical Keys */}
-      <tunnels.MainMenuTunnel.Out />
-      {renderWelcomeScreen && <tunnels.WelcomeScreenMenuHintTunnel.Out />}
-    </div>
-  );
-
   const renderSelectedShapeActions = () => (
     <Section
       heading="selectedShapeActions"

@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { memo, useEffect, useRef, useState } from "react";
-import { useDevice } from "./App";
 import type { LibraryItem } from "../types";
 import "./LibraryUnit.scss";
 import { PlusIcon } from "./icons";

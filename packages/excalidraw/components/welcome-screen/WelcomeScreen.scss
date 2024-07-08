@@ -29,19 +29,6 @@
   // ---------------------------------------------------------------------------
 
   .welcome-screen-decor-hint {
-    @media (max-height: 599px) {
-      display: none !important;
-    }
-
-    @media (max-width: 1024px), (max-width: 800px) {
-      .welcome-screen-decor {
-        &--help,
-        &--menu {
-          display: none;
-        }
-      }
-    }
-
     &--help {
       display: flex;
       position: absolute;
@@ -110,12 +97,6 @@
 
         :root[dir="rtl"] & {
           transform: scaleX(-1);
-        }
-      }
-
-      @media (max-width: 860px) {
-        .welcome-screen-decor-hint__label {
-          max-width: 160px;
         }
       }
     }
@@ -262,17 +243,7 @@
     }
   }
 
-  @media (max-height: 599px) {
-    .welcome-screen-center {
-      margin-top: 4rem;
-    }
-  }
-  @media (min-height: 600px) and (max-height: 900px) {
-    .welcome-screen-center {
-      margin-top: 8rem;
-    }
-  }
-  @media (max-height: 500px), (max-width: 320px) {
+  @media (max-height: 480px), (max-width: 320px) {
     .welcome-screen-center {
       display: none;
     }

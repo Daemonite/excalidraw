@@ -60,14 +60,11 @@
 
     &__islands-container {
       display: grid;
-      @media screen and (min-width: 1024px) {
-        grid-template-columns: 1fr 1fr;
-      }
       grid-column-gap: 1.5rem;
       grid-row-gap: 2rem;
     }
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 840px) {
       &__island--tools {
         grid-area: 1 / 1 / 2 / 2;
       }
