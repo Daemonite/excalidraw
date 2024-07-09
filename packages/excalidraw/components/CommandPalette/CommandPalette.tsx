@@ -23,8 +23,6 @@ import {
   searchIcon,
   boltIcon,
   bucketFillIcon,
-  mermaidLogoIcon,
-  brainIconThin,
   LibraryIcon,
 } from "../icons";
 import fuzzy from "fuzzy";
@@ -439,14 +437,7 @@ function CommandPaletteInner({
             keywords: ["toolbar"],
             viewMode: false,
             perform: ({ event }) => {
-              if (value === "image") {
-                app.setActiveTool({
-                  type: value,
-                  insertOnCanvasDirectly: event.type === EVENT.KEYDOWN,
-                });
-              } else {
-                app.setActiveTool({ type: value });
-              }
+              app.setActiveTool({ type: value });
             },
           };
 
@@ -465,48 +456,6 @@ function CommandPaletteInner({
             app.toggleLock();
           },
         },
-        {
-          label: `${t("labels.textToDiagram")}...`,
-          category: DEFAULT_CATEGORIES.tools,
-          icon: brainIconThin,
-          viewMode: false,
-          predicate: appProps.aiEnabled,
-          perform: () => {
-            setAppState((state) => ({
-              ...state,
-              openDialog: {
-                name: "ttd",
-                tab: "text-to-diagram",
-              },
-            }));
-          },
-        },
-        {
-          label: `${t("toolBar.mermaidToExcalidraw")}...`,
-          category: DEFAULT_CATEGORIES.tools,
-          icon: mermaidLogoIcon,
-          viewMode: false,
-          predicate: appProps.aiEnabled,
-          perform: () => {
-            setAppState((state) => ({
-              ...state,
-              openDialog: {
-                name: "ttd",
-                tab: "mermaid",
-              },
-            }));
-          },
-        },
-        // {
-        //   label: `${t("toolBar.magicframe")}...`,
-        //   category: DEFAULT_CATEGORIES.tools,
-        //   icon: MagicIconThin,
-        //   viewMode: false,
-        //   predicate: appProps.aiEnabled,
-        //   perform: () => {
-        //     app.onMagicframeToolSelect();
-        //   },
-        // },
       ];
 
       const allCommands = [

@@ -4,7 +4,6 @@ import {
   EllipseIcon,
   EraserIcon,
   FreedrawIcon,
-  ImageIcon,
   LineIcon,
   RectangleIcon,
   SelectionIcon,
@@ -67,13 +66,6 @@ export const SHAPES = [
     value: "text",
     key: KEYS.T,
     numericKey: KEYS["8"],
-    fillable: false,
-  },
-  {
-    icon: ImageIcon,
-    value: "image",
-    key: null,
-    numericKey: KEYS["9"],
     fillable: false,
   },
   {

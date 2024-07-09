@@ -31,7 +31,9 @@
       & > .Stats {
         width: 204px;
         position: absolute;
-        top: 60px;
+        top: calc(
+          var(--lg-button-size) + 2 * var(--space-factor) + var(--space-factor)
+        );
         font-size: 12px;
         z-index: var(--zIndex-layerUI);
         pointer-events: var(--ui-pointerEvents);
