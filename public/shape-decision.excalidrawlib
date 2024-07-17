@@ -1,0 +1,42 @@
+{
+  "type": "excalidrawlib",
+  "version": 2,
+  "source": "http://localhost:3000",
+  "libraryItems": [
+    {
+      "status": "unpublished",
+      "elements": [
+        {
+          "type": "diamond",
+          "version": 1276,
+          "versionNonce": 339885742,
+          "index": "b1s",
+          "isDeleted": false,
+          "id": "vwaLvKcxwkL99xlznUcXu",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 0,
+          "y": 0,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#ffffff",
+          "width": 168,
+          "height": 86,
+          "seed": 292911022,
+          "groupIds": [],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1721191930104,
+          "link": null,
+          "locked": false
+        }
+      ],
+      "id": "dY24X06p3x8kOgZBlEzFF",
+      "created": 1721191934806
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "type": "excalidrawlib",
+  "version": 2,
+  "source": "http://localhost:3000",
+  "libraryItems": [
+    {
+      "status": "unpublished",
+      "elements": [
+        {
+          "type": "ellipse",
+          "version": 2010,
+          "versionNonce": 793790155,
+          "index": "b3J",
+          "isDeleted": false,
+          "id": "opxH-Jft33vJv2Ov2IvYV",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 770.6565164246341,
+          "y": 586.3032930207626,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#1b1b1f",
+          "width": 39.32795344602113,
+          "height": 37.79170526453592,
+          "seed": 2054694661,
+          "groupIds": [
+            "5nPEZ95JrNriVmBF4yi9p"
+          ],
+          "frameId": null,
+          "roundness": {
+            "type": 2
+          },
+          "boundElements": [
+            {
+              "id": "PXYCy03gbrgne6G-qRHPX",
+              "type": "arrow"
+            }
+          ],
+          "updated": 1721195993894,
+          "link": null,
+          "locked": false
+        },
+        {
+          "type": "arrow",
+          "version": 942,
+          "versionNonce": 1641324389,
+          "index": "b3K",
+          "isDeleted": false,
+          "id": "PXYCy03gbrgne6G-qRHPX",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 803.4593278197877,
+          "y": 590.7369900762069,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#1b1b1f",
+          "width": 9.2174890889112,
+          "height": 9.831988361505282,
+          "seed": 491191909,
+          "groupIds": [
+            "5nPEZ95JrNriVmBF4yi9p"
+          ],
+          "frameId": null,
+          "roundness": {
+            "type": 2
+          },
+          "boundElements": [],
+          "updated": 1721195993894,
+          "link": null,
+          "locked": false,
+          "startBinding": {
+            "elementId": "opxH-Jft33vJv2Ov2IvYV",
+            "focus": -0.01584767091778061,
+            "gap": 1
+          },
+          "endBinding": null,
+          "lastCommittedPoint": null,
+          "startArrowhead": null,
+          "endArrowhead": "triangle",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              9.2174890889112,
+              -9.831988361505282
+            ]
+          ]
+        }
+      ],
+      "id": "blRlWmWGHs4E-t_-kCRhu",
+      "created": 1721195998576
+    }
+  ]
+}

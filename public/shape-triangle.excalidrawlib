@@ -1,0 +1,112 @@
+{
+  "type": "excalidrawlib",
+  "version": 2,
+  "source": "http://localhost:3000",
+  "libraryItems": [
+    {
+      "status": "unpublished",
+      "elements": [
+        {
+          "type": "line",
+          "version": 500,
+          "versionNonce": 552859749,
+          "index": "b3W",
+          "isDeleted": false,
+          "id": "O9eUE3kw7q4t7pn6mZHz5",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 715.0416666666665,
+          "y": 646.125,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#ffffff",
+          "width": 153.2499999999999,
+          "height": 87.25,
+          "seed": 954918565,
+          "groupIds": [
+            "kroakKqTEEqO0QPe5ioNG"
+          ],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1721196406428,
+          "link": null,
+          "locked": false,
+          "startBinding": null,
+          "endBinding": null,
+          "lastCommittedPoint": null,
+          "startArrowhead": null,
+          "endArrowhead": null,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              76.25,
+              -87.25
+            ],
+            [
+              153.2499999999999,
+              0
+            ]
+          ]
+        },
+        {
+          "type": "line",
+          "version": 998,
+          "versionNonce": 313650283,
+          "index": "b3X",
+          "isDeleted": false,
+          "id": "FUCQm1Bflk59UOw0gv65z",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 778.1666666666667,
+          "y": 575.25,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#ffffff",
+          "width": 26.000000000000007,
+          "height": 14.75,
+          "seed": 1786825221,
+          "groupIds": [
+            "kroakKqTEEqO0QPe5ioNG"
+          ],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1721196406428,
+          "link": null,
+          "locked": false,
+          "startBinding": null,
+          "endBinding": null,
+          "lastCommittedPoint": null,
+          "startArrowhead": null,
+          "endArrowhead": null,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              13.186378466557926,
+              14.75
+            ],
+            [
+              26.000000000000007,
+              0
+            ]
+          ]
+        }
+      ],
+      "id": "fdG0pz21NR0IGo95ADKJ1",
+      "created": 1721196419515
+    }
+  ]
+}

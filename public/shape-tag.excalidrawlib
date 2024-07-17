@@ -1,0 +1,125 @@
+{
+  "type": "excalidrawlib",
+  "version": 2,
+  "source": "http://localhost:3000",
+  "libraryItems": [
+    {
+      "status": "unpublished",
+      "elements": [
+        {
+          "type": "line",
+          "version": 2791,
+          "versionNonce": 150611560,
+          "index": "b1x",
+          "isDeleted": false,
+          "id": "jMeHbuSzL8XalQukZgizn",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 625.7031249999999,
+          "y": 653.125,
+          "strokeColor": "#1b1b1f",
+          "backgroundColor": "#ffffff",
+          "width": 148.59375000000023,
+          "height": 84.6875,
+          "seed": 1074847000,
+          "groupIds": [],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1721193814426,
+          "link": null,
+          "locked": false,
+          "startBinding": null,
+          "endBinding": null,
+          "lastCommittedPoint": null,
+          "startArrowhead": null,
+          "endArrowhead": null,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              34.531250000000114,
+              -42.96875
+            ],
+            [
+              116.56250000000011,
+              -42.96875
+            ],
+            [
+              124.68750000000011,
+              -40.9375
+            ],
+            [
+              131.71875000000023,
+              -36.71875
+            ],
+            [
+              137.81250000000023,
+              -31.25
+            ],
+            [
+              142.34375000000023,
+              -24.53125
+            ],
+            [
+              145.93750000000023,
+              -16.71875
+            ],
+            [
+              147.96875000000023,
+              -8.75
+            ],
+            [
+              148.59375000000023,
+              -0.15625
+            ],
+            [
+              147.96875000000023,
+              8.59375
+            ],
+            [
+              145.62500000000023,
+              16.25
+            ],
+            [
+              142.18750000000023,
+              23.59375
+            ],
+            [
+              137.50000000000023,
+              30.46875
+            ],
+            [
+              131.2500000000001,
+              36.09375
+            ],
+            [
+              123.90625000000011,
+              40
+            ],
+            [
+              116.56250000000011,
+              41.71875
+            ],
+            [
+              34.531250000000114,
+              41.71875
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "id": "pKAXQtDZUe8fVpvWQ5uAm",
+      "created": 1721193816237
+    }
+  ]
+}
