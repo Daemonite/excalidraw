@@ -344,6 +344,8 @@ const ExcalidrawWrapper = () => {
       return;
     }
 
+    window.EXCALIDRAW_UPDATESCENE = excalidrawAPI.updateScene;
+
     const loadImages = (
       data: ResolutionType<typeof initializeScene>,
       isInitialLoad = false,
