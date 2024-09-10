@@ -1,7 +1,6 @@
 import React from "react";
 import type { Theme } from "../../packages/excalidraw/element/types";
 import { MainMenu } from "../../packages/excalidraw/index";
-import { LanguageList } from "./LanguageList";
 
 export const AppMainMenu: React.FC<{
   onCollabDialogOpen: () => any;
@@ -22,9 +21,6 @@ export const AppMainMenu: React.FC<{
         theme={props.theme}
         onSelect={props.setTheme}
       />
-      <MainMenu.ItemCustom>
-        <LanguageList style={{ width: "100%" }} />
-      </MainMenu.ItemCustom>
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>
   );
