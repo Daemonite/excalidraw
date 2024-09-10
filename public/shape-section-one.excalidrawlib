@@ -1,0 +1,74 @@
+{
+  "type": "excalidrawlib",
+  "version": 2,
+  "source": "http://localhost:3000",
+  "libraryItems": [
+    {
+      "status": "unpublished",
+      "elements": [
+        {
+          "type": "rectangle",
+          "version": 303,
+          "versionNonce": 165291683,
+          "index": "a3V",
+          "isDeleted": false,
+          "id": "LEi4qvrKQ5Sxr7X9bpa79",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 519.6666361490879,
+          "y": 460.39603657965256,
+          "strokeColor": "#1e1e1e",
+          "backgroundColor": "transparent",
+          "width": 344.00006103515625,
+          "height": 330.57784695095506,
+          "seed": 1867434755,
+          "groupIds": [
+            "mNeR-UfYIiDhcV6xtJAqU"
+          ],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1725930466592,
+          "link": null,
+          "locked": false
+        },
+        {
+          "type": "rectangle",
+          "version": 59,
+          "versionNonce": 1988798125,
+          "index": "a4",
+          "isDeleted": false,
+          "id": "PTmwJdcEyBK3jQxy9c1bJ",
+          "fillStyle": "solid",
+          "strokeWidth": 2,
+          "strokeStyle": "solid",
+          "roughness": 0,
+          "opacity": 100,
+          "angle": 0,
+          "x": 520.9744851761034,
+          "y": 541.6775711940546,
+          "strokeColor": "#1e1e1e",
+          "backgroundColor": "transparent",
+          "width": 342.3999938964844,
+          "height": 0.7999267578125,
+          "seed": 1613582765,
+          "groupIds": [
+            "mNeR-UfYIiDhcV6xtJAqU"
+          ],
+          "frameId": null,
+          "roundness": null,
+          "boundElements": [],
+          "updated": 1725930466592,
+          "link": null,
+          "locked": false
+        }
+      ],
+      "id": "pR2BMJi6PnFVv5nvHSSja",
+      "created": 1725930472643
+    }
+  ]
+}
