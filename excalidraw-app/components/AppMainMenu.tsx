@@ -9,6 +9,7 @@ export const AppMainMenu: React.FC<{
   isCollabEnabled: boolean;
   theme: Theme | "system";
   setTheme: (theme: Theme | "system") => void;
+  refresh: () => void;
 }> = React.memo((props) => {
   return (
     <MainMenu>

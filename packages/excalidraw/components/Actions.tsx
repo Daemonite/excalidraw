@@ -20,10 +20,11 @@ import type { AppClassProperties, AppProps, UIAppState, Zoom } from "../types";
 import { capitalizeString, isTransparent } from "../utils";
 import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
-import { hasStrokeColor } from "../scene/comparisons";
+import { hasStrokeColor, toolIsArrow } from "../scene/comparisons";
 import { trackEvent } from "../analytics";
 import {
   hasBoundTextElement,
+  isElbowArrow,
   isLinearElement,
   isTextElement,
 } from "../element/typeChecks";
@@ -34,6 +35,7 @@ import {
   shouldAllowVerticalAlign,
   suppportsHorizontalAlign,
 } from "../element/textElement";
+import { CLASSES } from "../constants";
 
 import "./Actions.scss";
 
@@ -90,7 +92,9 @@ export const SelectedShapeActions = ({
   ) {
     isSingleElementBoundContainer = true;
   }
-  const isEditing = Boolean(appState.editingElement);
+  const isEditingTextOrNewElement = Boolean(
+    appState.editingTextElement || appState.newElement,
+  );
   const device = useDevice();
   const isRTL = document.documentElement.getAttribute("dir") === "rtl";
 
@@ -108,7 +112,8 @@ export const SelectedShapeActions = ({
   const showLineEditorAction =
     !appState.editingLinearElement &&
     targetElements.length === 1 &&
-    isLinearElement(targetElements[0]);
+    isLinearElement(targetElements[0]) &&
+    !isElbowArrow(targetElements[0]);
 
   return (
     <div className="panelColumn">
@@ -142,13 +147,16 @@ export const SelectedShapeActions = ({
         <>{renderAction("changeRoundness")}</>
       )}
 
+      {(toolIsArrow(appState.activeTool.type) ||
+        targetElements.some((element) => toolIsArrow(element.type))) && (
+        <>{renderAction("changeArrowType")}</>
+      )}
+
       {(appState.activeTool.type === "text" ||
         targetElements.some(isTextElement)) && (
         <>
-          {renderAction("changeFontSize")}
-
           {renderAction("changeFontFamily")}
-
+          {renderAction("changeFontSize")}
           {(appState.activeTool.type === "text" ||
             suppportsHorizontalAlign(targetElements, elementsMap)) &&
             renderAction("changeTextAlign")}
@@ -216,7 +224,7 @@ export const SelectedShapeActions = ({
           </div>
         </fieldset>
       )}
-      {!isEditing && targetElements.length > 0 && (
+      {!isEditingTextOrNewElement && targetElements.length > 0 && (
         <fieldset>
           <legend>{t("labels.actions")}</legend>
           <div className="buttonList">
@@ -300,7 +308,7 @@ export const ZoomActions = ({
   renderAction: ActionManager["renderAction"];
   zoom: Zoom;
 }) => (
-  <Stack.Col gap={1} className="zoom-actions">
+  <Stack.Col gap={1} className={CLASSES.ZOOM_ACTIONS}>
     <Stack.Row align="center">
       {renderAction("zoomOut")}
       {renderAction("resetZoom")}

@@ -1,7 +1,9 @@
+import type { LineSegment } from "../../utils";
 import { ROUNDNESS } from "../constants";
-import type { ElementOrToolType } from "../types";
+import type { ElementOrToolType, Point } from "../types";
 import type { MarkNonNullable } from "../utility-types";
 import { assertNever } from "../utils";
+import type { Bounds } from "./bounds";
 import type {
   ExcalidrawElement,
   ExcalidrawTextElement,
@@ -21,6 +23,10 @@ import type {
   ExcalidrawIframeLikeElement,
   ExcalidrawMagicFrameElement,
   ExcalidrawArrowElement,
+  ExcalidrawElbowArrowElement,
+  PointBinding,
+  FixedPointBinding,
+  ExcalidrawFlowchartNodeElement,
 } from "./types";
 
 export const isInitializedImageElement = (
@@ -106,6 +112,12 @@ export const isArrowElement = (
   return element != null && element.type === "arrow";
 };
 
+export const isElbowArrow = (
+  element?: ExcalidrawElement,
+): element is ExcalidrawElbowArrowElement => {
+  return isArrowElement(element) && element.elbowed;
+};
+
 export const isLinearElementType = (
   elementType: ElementOrToolType,
 ): boolean => {
@@ -147,6 +159,39 @@ export const isBindableElement = (
       element.type === "frame" ||
       element.type === "magicframe" ||
       (element.type === "text" && !element.containerId))
+  );
+};
+
+export const isRectanguloidElement = (
+  element?: ExcalidrawElement | null,
+): element is ExcalidrawBindableElement => {
+  return (
+    element != null &&
+    (element.type === "rectangle" ||
+      element.type === "diamond" ||
+      element.type === "image" ||
+      element.type === "iframe" ||
+      element.type === "embeddable" ||
+      element.type === "frame" ||
+      element.type === "magicframe" ||
+      (element.type === "text" && !element.containerId))
+  );
+};
+
+// TODO: Remove this when proper distance calculation is introduced
+// @see binding.ts:distanceToBindableElement()
+export const isRectangularElement = (
+  element?: ExcalidrawElement | null,
+): element is ExcalidrawBindableElement => {
+  return (
+    element != null &&
+    (element.type === "rectangle" ||
+      element.type === "image" ||
+      element.type === "text" ||
+      element.type === "iframe" ||
+      element.type === "embeddable" ||
+      element.type === "frame" ||
+      element.type === "magicframe")
   );
 };
 
@@ -192,6 +237,16 @@ export const isExcalidrawElement = (
       return false;
     }
   }
+};
+
+export const isFlowchartNodeElement = (
+  element: ExcalidrawElement,
+): element is ExcalidrawFlowchartNodeElement => {
+  return (
+    element.type === "rectangle" ||
+    element.type === "ellipse" ||
+    element.type === "diamond"
+  );
 };
 
 export const hasBoundTextElement = (
@@ -263,3 +318,29 @@ export const getDefaultRoundnessTypeForElement = (
 
   return null;
 };
+
+export const isFixedPointBinding = (
+  binding: PointBinding,
+): binding is FixedPointBinding => {
+  return binding.fixedPoint != null;
+};
+
+// TODO: Move this to @excalidraw/math
+export const isPoint = (point: unknown): point is Point =>
+  Array.isArray(point) && point.length === 2;
+
+// TODO: Move this to @excalidraw/math
+export const isBounds = (box: unknown): box is Bounds =>
+  Array.isArray(box) &&
+  box.length === 4 &&
+  typeof box[0] === "number" &&
+  typeof box[1] === "number" &&
+  typeof box[2] === "number" &&
+  typeof box[3] === "number";
+
+// TODO: Move this to @excalidraw/math
+export const isLineSegment = (segment: unknown): segment is LineSegment =>
+  Array.isArray(segment) &&
+  segment.length === 2 &&
+  isPoint(segment[0]) &&
+  isPoint(segment[0]);

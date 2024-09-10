@@ -15,33 +15,45 @@ import "./DragInput.scss";
 import type { AppState } from "../../types";
 import { cloneJSON } from "../../utils";
 
-export type DragInputCallbackType<T extends StatsInputProperty> = (props: {
+export type DragInputCallbackType<
+  P extends StatsInputProperty,
+  E = ExcalidrawElement,
+> = (props: {
   accumulatedChange: number;
   instantChange: number;
-  originalElements: readonly ExcalidrawElement[];
+  originalElements: readonly E[];
   originalElementsMap: ElementsMap;
   shouldKeepAspectRatio: boolean;
   shouldChangeByStepSize: boolean;
-  nextValue?: number;
-  property: T;
   scene: Scene;
+  nextValue?: number;
+  property: P;
   originalAppState: AppState;
+  setInputValue: (value: number) => void;
 }) => void;
 
-interface StatsDragInputProps<T extends StatsInputProperty> {
+interface StatsDragInputProps<
+  T extends StatsInputProperty,
+  E = ExcalidrawElement,
+> {
   label: string | React.ReactNode;
   icon?: React.ReactNode;
   value: number | "Mixed";
-  elements: readonly ExcalidrawElement[];
+  elements: readonly E[];
   editable?: boolean;
   shouldKeepAspectRatio?: boolean;
-  dragInputCallback: DragInputCallbackType<T>;
+  dragInputCallback: DragInputCallbackType<T, E>;
   property: T;
   scene: Scene;
   appState: AppState;
+  /** how many px you need to drag to get 1 unit change */
+  sensitivity?: number;
 }
 
-const StatsDragInput = <T extends StatsInputProperty>({
+const StatsDragInput = <
+  T extends StatsInputProperty,
+  E extends ExcalidrawElement = ExcalidrawElement,
+>({
   label,
   icon,
   dragInputCallback,
@@ -52,7 +64,8 @@ const StatsDragInput = <T extends StatsInputProperty>({
   property,
   scene,
   appState,
-}: StatsDragInputProps<T>) => {
+  sensitivity = 1,
+}: StatsDragInputProps<T, E>) => {
   const app = useApp();
   const inputRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
@@ -61,7 +74,7 @@ const StatsDragInput = <T extends StatsInputProperty>({
 
   const stateRef = useRef<{
     originalAppState: AppState;
-    originalElements: readonly ExcalidrawElement[];
+    originalElements: readonly E[];
     lastUpdatedValue: string;
     updatePending: boolean;
   }>(null!);
@@ -82,7 +95,7 @@ const StatsDragInput = <T extends StatsInputProperty>({
 
   const handleInputValue = (
     updatedValue: string,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly E[],
     appState: AppState,
   ) => {
     if (!stateRef.current.updatePending) {
@@ -113,31 +126,53 @@ const StatsDragInput = <T extends StatsInputProperty>({
         originalElementsMap: app.scene.getNonDeletedElementsMap(),
         shouldKeepAspectRatio: shouldKeepAspectRatio!!,
         shouldChangeByStepSize: false,
+        scene,
         nextValue: rounded,
         property,
-        scene,
         originalAppState: appState,
+        setInputValue: (value) => setInputValue(String(value)),
       });
       app.syncActionResult({ storeAction: StoreAction.CAPTURE });
     }
   };
 
-  const handleInputValueRef = useRef(handleInputValue);
-  handleInputValueRef.current = handleInputValue;
+  const callbacksRef = useRef<
+    Partial<{
+      handleInputValue: typeof handleInputValue;
+      onPointerUp: (event: PointerEvent) => void;
+      onPointerMove: (event: PointerEvent) => void;
+    }>
+  >({});
+  callbacksRef.current.handleInputValue = handleInputValue;
 
   // make sure that clicking on canvas (which umounts the component)
   // updates current input value (blur isn't triggered)
   useEffect(() => {
     const input = inputRef.current;
+    const callbacks = callbacksRef.current;
     return () => {
       const nextValue = input?.value;
       if (nextValue) {
-        handleInputValueRef.current(
+        callbacks.handleInputValue?.(
           nextValue,
           stateRef.current.originalElements,
           stateRef.current.originalAppState,
         );
       }
+
+      // generally not needed, but in case `pointerup` doesn't fire and
+      // we don't remove the listeners that way, we should at least remove
+      // on unmount
+      window.removeEventListener(
+        EVENT.POINTER_MOVE,
+        callbacks.onPointerMove!,
+        false,
+      );
+      window.removeEventListener(
+        EVENT.POINTER_UP,
+        callbacks.onPointerUp!,
+        false,
+      );
     };
   }, [
     // we need to track change of `editable` state as mount/unmount
@@ -163,6 +198,8 @@ const StatsDragInput = <T extends StatsInputProperty>({
         ref={labelRef}
         onPointerDown={(event) => {
           if (inputRef.current && editable) {
+            document.body.classList.add("excalidraw-cursor-resize");
+
             let startValue = Number(inputRef.current.value);
             if (isNaN(startValue)) {
               startValue = 0;
@@ -173,54 +210,57 @@ const StatsDragInput = <T extends StatsInputProperty>({
               y: number;
             } | null = null;
 
-            let originalElements: ExcalidrawElement[] | null = null;
             let originalElementsMap: Map<string, ExcalidrawElement> | null =
-              null;
+              app.scene
+                .getNonDeletedElements()
+                .reduce((acc: ElementsMap, element) => {
+                  acc.set(element.id, deepCopyElement(element));
+                  return acc;
+                }, new Map());
+
+            let originalElements: readonly E[] | null = elements.map(
+              (element) => originalElementsMap!.get(element.id) as E,
+            );
+
             const originalAppState: AppState = cloneJSON(appState);
 
-            let accumulatedChange: number | null = null;
-
-            document.body.classList.add("excalidraw-cursor-resize");
+            let accumulatedChange = 0;
+            let stepChange = 0;
 
             const onPointerMove = (event: PointerEvent) => {
-              if (!originalElementsMap) {
-                originalElementsMap = app.scene
-                  .getNonDeletedElements()
-                  .reduce((acc, element) => {
-                    acc.set(element.id, deepCopyElement(element));
-                    return acc;
-                  }, new Map() as ElementsMap);
-              }
-
-              if (!originalElements) {
-                originalElements = elements.map(
-                  (element) => originalElementsMap!.get(element.id)!,
-                );
-              }
-
-              if (!accumulatedChange) {
-                accumulatedChange = 0;
-              }
-
               if (
                 lastPointer &&
                 originalElementsMap !== null &&
-                accumulatedChange !== null
+                originalElements !== null
               ) {
                 const instantChange = event.clientX - lastPointer.x;
-                accumulatedChange += instantChange;
 
-                dragInputCallback({
-                  accumulatedChange,
-                  instantChange,
-                  originalElements,
-                  originalElementsMap,
-                  shouldKeepAspectRatio: shouldKeepAspectRatio!!,
-                  shouldChangeByStepSize: event.shiftKey,
-                  property,
-                  scene,
-                  originalAppState,
-                });
+                if (instantChange !== 0) {
+                  stepChange += instantChange;
+
+                  if (Math.abs(stepChange) >= sensitivity) {
+                    stepChange =
+                      Math.sign(stepChange) *
+                      Math.floor(Math.abs(stepChange) / sensitivity);
+
+                    accumulatedChange += stepChange;
+
+                    dragInputCallback({
+                      accumulatedChange,
+                      instantChange: stepChange,
+                      originalElements,
+                      originalElementsMap,
+                      shouldKeepAspectRatio: shouldKeepAspectRatio!!,
+                      shouldChangeByStepSize: event.shiftKey,
+                      property,
+                      scene,
+                      originalAppState,
+                      setInputValue: (value) => setInputValue(String(value)),
+                    });
+
+                    stepChange = 0;
+                  }
+                }
               }
 
               lastPointer = {
@@ -229,27 +269,31 @@ const StatsDragInput = <T extends StatsInputProperty>({
               };
             };
 
+            const onPointerUp = () => {
+              window.removeEventListener(
+                EVENT.POINTER_MOVE,
+                onPointerMove,
+                false,
+              );
+
+              app.syncActionResult({ storeAction: StoreAction.CAPTURE });
+
+              lastPointer = null;
+              accumulatedChange = 0;
+              stepChange = 0;
+              originalElements = null;
+              originalElementsMap = null;
+
+              document.body.classList.remove("excalidraw-cursor-resize");
+
+              window.removeEventListener(EVENT.POINTER_UP, onPointerUp, false);
+            };
+
+            callbacksRef.current.onPointerMove = onPointerMove;
+            callbacksRef.current.onPointerUp = onPointerUp;
+
             window.addEventListener(EVENT.POINTER_MOVE, onPointerMove, false);
-            window.addEventListener(
-              EVENT.POINTER_UP,
-              () => {
-                window.removeEventListener(
-                  EVENT.POINTER_MOVE,
-                  onPointerMove,
-                  false,
-                );
-
-                app.syncActionResult({ storeAction: StoreAction.CAPTURE });
-
-                lastPointer = null;
-                accumulatedChange = null;
-                originalElements = null;
-                originalElementsMap = null;
-
-                document.body.classList.remove("excalidraw-cursor-resize");
-              },
-              false,
-            );
+            window.addEventListener(EVENT.POINTER_UP, onPointerUp, false);
           }
         }}
         onPointerEnter={() => {
