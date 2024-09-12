@@ -336,11 +336,15 @@ body.excalidraw-cursor-resize * {
   }
 
   .App-menu_top {
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-gap: 2rem;
-    align-items: flex-start;
+    align-items: center;
     cursor: default;
     pointer-events: none !important;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: 1fr 2fr 1fr;
+    }
 
     & > * {
       pointer-events: var(--ui-pointerEvents);
@@ -405,6 +409,12 @@ body.excalidraw-cursor-resize * {
       var(--lg-button-size) + var(--padding) * var(--space-factor) +
         var(--space-factor)
     );
+  }
+
+  .App-menu_top__left {
+    @media (max-width: 1199.98px) {
+      display: none;
+    }
   }
 
   .dropdown-select {
