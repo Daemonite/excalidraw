@@ -327,8 +327,12 @@ body.excalidraw-cursor-resize * {
 
   .shapes-section {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     pointer-events: none !important;
+
+    @media (min-width: 1200px) {
+      justify-content: center;
+    }
 
     & > * {
       pointer-events: var(--ui-pointerEvents);
@@ -336,18 +340,22 @@ body.excalidraw-cursor-resize * {
   }
 
   .App-menu_top {
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 2rem;
+    grid-template-columns: auto 2fr 1fr;
     align-items: center;
     cursor: default;
     pointer-events: none !important;
 
     @media (min-width: 1200px) {
       grid-template-columns: 1fr 2fr 1fr;
+      grid-gap: 2rem;
     }
 
     & > * {
       pointer-events: var(--ui-pointerEvents);
+    }
+
+    .HintViewer {
+      margin-top: 0;
     }
   }
 
@@ -407,14 +415,8 @@ body.excalidraw-cursor-resize * {
     position: absolute;
     top: calc(
       var(--lg-button-size) + var(--padding) * var(--space-factor) +
-        var(--space-factor)
+        var(--space-factor) + var(--editor-container-padding)
     );
-  }
-
-  .App-menu_top__left {
-    @media (max-width: 1199.98px) {
-      display: none;
-    }
   }
 
   .dropdown-select {
